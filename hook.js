@@ -1,5 +1,5 @@
-import isGitDirty from 'is-git-dirty';
 import assert from 'node:assert';
+import isGitDirty from 'is-git-dirty';
 
 const isDirty = isGitDirty();
 
