@@ -1,0 +1,82 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noConstAssign": "error",
+				"noEmptyPattern": "error",
+				"noSelfAssign": "error",
+				"noUnsafeFinally": "warn",
+				"noUnsafeOptionalChaining": "error",
+				"noVoidTypeReturn": "error",
+				"useYield": "warn",
+				"useIsNan": "info"
+			},
+			"complexity": {
+				"noBannedTypes": "warn",
+				"noEmptyTypeParameters": "error",
+				"noUselessCatch": "error",
+				"noVoid": "warn",
+				"useSimplifiedLogicExpression": "error"
+			},
+			"security": {
+				"noGlobalEval": "error",
+				"noDangerouslySetInnerHtml": "error",
+				"noDangerouslySetInnerHtmlWithChildren": "error"
+			},
+			"nursery": {
+				"noDuplicateAtImportRules": "error",
+				"noDuplicateJsonKeys": "error",
+				"noEmptyBlock": "error",
+				"noExportedImports": "error",
+				"useTopLevelRegex": "error",
+				"noLabelWithoutControl": "error"
+			},
+			"suspicious": {
+				"noCatchAssign": "error",
+				"noConfusingLabels": "error",
+				"noDuplicateCase": "error",
+				"noDuplicateTestHooks": "error",
+				"noEmptyInterface": "error",
+				"noEmptyBlockStatements": "error"
+			},
+			"performance": {
+				"noDelete": "error",
+				"noReExportAll": "error",
+				"noBarrelFile": "error",
+				"noAccumulatingSpread": "info"
+			},
+			"style": {
+				"noImplicitBoolean": "error",
+				"noNonNullAssertion": "error",
+				"noParameterAssign": "error",
+				"noVar": "error",
+				"useAsConstAssertion": "error",
+				"useBlockStatements": "error",
+				"useConst": "error",
+				"useExportType": "error"
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"lineWidth": 100,
+		"indentStyle": "tab"
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"arrowParentheses": "always",
+			"bracketSpacing": true,
+			"enabled": true,
+			"trailingCommas": "all",
+			"semicolons": "always",
+			"indentWidth": 4
+		}
+	}
+}

@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "prepare": "node preinstall.js --max-old-space-size=10M",
-    "lint": "xo *.{ts,js,jsx,tsx} --fix",
+    "lint": "biome lint --write ./src",
+    "format": "biome format --write ./src",
     "build": "tsup",
     "hook": "node hook.js --max-old-space-size=50M"
   },
@@ -19,13 +20,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@swc/core": "^1.4.8",
-    "@types/node": "^20.11.30",
+    "@biomejs/biome": "1.8.3",
+    "@swc/core": "^1.7.23",
+    "@types/node": "^20.16.5",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "is-git-dirty": "^2.0.2",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.2",
-    "xo": "^0.58.0"
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
   }
 }
