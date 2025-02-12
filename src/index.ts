@@ -6,6 +6,6 @@ const snpmb = new SnpmbClient({
 });
 
 console.log(await snpmb.authManager.login());
-console.log(await snpmb.authManager.getVervalApiUrl());
-console.log(await snpmb.authManager.getVervalToken());
-console.log(await snpmb.authManager.fetchInfo());
+console.log(await snpmb.authManager.$verval.getVervalApiUrl());
+console.log(await snpmb.authManager.$verval.getVervalToken());
+console.log(await snpmb.authManager.$verval.fetchInfo());
