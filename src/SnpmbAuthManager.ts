@@ -2,7 +2,7 @@ import axios, { type AxiosInstance } from 'axios';
 import { FileCookieStore } from 'tough-cookie-file-store';
 import { CookieJar } from 'tough-cookie';
 
-import type { SnpmbClientParams } from "@/@types/index.js";
+import type { SnpmbClientParams, SnpmbVervalData, SnpmbVervalParams } from "@/@types/index.js";
 import type { SnpmbClient } from "@/SnpmbClient.js";
 import { DEFAULT_SNPMB_COOKIE_FILE, SNPMB_DASHBOARD_URL, SNPMB_SIGN_URL, SNPMB_VERVAL_URL } from "@/const.js";
 import { existsSync, writeFileSync } from 'node:fs';
@@ -21,6 +21,7 @@ const URL_REG = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]
 export class SnpmbAuthManager
 {
     protected $http!: AxiosInstance;
+    protected $vervalParams!: SnpmbVervalParams;
 
     /**
      * @constructor
@@ -106,7 +107,57 @@ export class SnpmbAuthManager
         return false;
     }
 
+    public async fetchInfo(): Promise<SnpmbVervalData | undefined> {
+        if (!(this.$vervalParams.url || this.$vervalParams.token)) {
+            throw new Error('Missing Verval Params')
+        }
+
+        const response = await this.$http.get(new URL('./api/siswa/verval', this.$vervalParams.url).href, {
+            headers: {
+                'Authorization': `Bearer ${this.$vervalParams.token}`,
+            },
+        });
+        return response.data?.data as SnpmbVervalData;
+    }
+
     public async getVervalToken(): Promise<string | undefined> {
+        if (!this.$vervalParams?.url) {
+            throw new Error('Missing Verval SNPMB URL');
+        }
+
+        const loginResponse = await this.$http.get(new URL('./login', this.$vervalParams.url).href);
+        if (loginResponse.request.path.startsWith('/auth/callback')) {
+            const callbackParsedUrl = new URL(`.${loginResponse.request.path}`, `https://${loginResponse.request.host}`);
+
+            const callbackCode = callbackParsedUrl.searchParams.get('code');
+            const stateCode = callbackParsedUrl.searchParams.get('state');
+
+            if (!(callbackCode && stateCode)) {
+                return undefined;
+            }
+
+            const callbackUrl = new URL('./callback', this.$vervalParams.url);
+            callbackUrl.searchParams.set('code', callbackCode);
+            callbackUrl.searchParams.set('state', stateCode);
+            callbackUrl.searchParams.set('session_state', 'undefined');
+
+            const callbackResponse = await this.$http.get(callbackUrl.href);
+            const token = callbackResponse.data.data?.token;
+
+            if (token) {
+                this.$vervalParams = {
+                    ...this.$vervalParams,
+                    token,
+                }
+
+                return token;
+            }
+        }
+
+        return undefined;
+    }
+
+    public async getVervalApiUrl(): Promise<string | undefined> {
         // Extract index chunk page
         const vervalFirstResponse = await this.$http.get(this.params.snpmb?.vervalUrl ?? SNPMB_VERVAL_URL);
         const scriptChunks = INDEX_CHUNK_REG.exec(vervalFirstResponse.data);
@@ -123,6 +174,11 @@ export class SnpmbAuthManager
 
         if (!vervalApiUrl) {
             return undefined;
+        }
+
+        this.$vervalParams = {
+            ...this.$vervalParams,
+            url: vervalApiUrl,
         }
 
         return vervalApiUrl;
