@@ -1,3 +1,9 @@
-import process from 'node:process';
+import { SnpmbClient } from "./SnpmbClient.js";
 
-process.stdout.write('Hello World!\n');
+const snpmb = new SnpmbClient({
+    email: process.env.EMAIL ?? '',
+    password: process.env.PASSWORD ?? '',
+});
+
+console.log(await snpmb.authManager.login())
+console.log(await snpmb.authManager.getVervalToken());
