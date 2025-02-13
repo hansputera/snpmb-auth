@@ -28,6 +28,10 @@ export type SnpmbClientParams = {
 		 * SNPMB SNBP Service URL
 		 */
 		snpbUrl?: string;
+		/**
+		 * SNPMB PDSS Service Url
+		 */
+		pdssUrl?: string;
 
 		/**
 		 * SNPMB Cookie file name (e.g. /tmp/cookie-1.json)
@@ -42,7 +46,7 @@ export type SnpmbVervalParams = {
 	token: string;
 };
 
-export type SnpmbVervalData = {
+export type SnpmbStudentVervalData = {
 	peserta_didik_id: string;
 	nisn: string;
 	npsn: string;
@@ -76,7 +80,7 @@ export type SnpmbVervalData = {
 	jumlah_tanggungan: number;
 	penghasilan_ayah: string;
 	penghasilan_ibu: string;
-	snpmb_status_pendaftaran: number;
+	snpmb_status_pendaftaran: StatusPendaftaran;
 	snpmb_email: string;
 	snpmb_last_sync_pusdatin: string;
 	tanggal_permanen: string;
@@ -190,4 +194,112 @@ export type SnpmbSnbpStudentProgramData = {
 		portfolio_type_code: string;
 		degree: string;
 	};
+};
+
+export type SnpmbVervalUserInfoData = {
+	roles: Array<string>;
+	reg_id: string;
+	access_token: string;
+	iss: string;
+	sub: string;
+	exp: number;
+};
+
+export type SnpmbVervalSchoolVervalData = {
+	sekolah_id: string;
+	kode_registrasi: string;
+	npsn: string;
+	nama: string;
+	status_sekolah_id: string;
+	status_sekolah: string;
+	alamat_jalan: string;
+	rt: number;
+	rw: number;
+	desa_kelurahan: string;
+	kode_wilayah: string;
+	kecamatan: string;
+	kode_wilayah_kab: string;
+	kabupaten: string;
+	kode_wilayah_prop: string;
+	propinsi: string;
+	kode_pos: string;
+	bentuk_pendidikan_id: number;
+	bentuk_pendidikan: string;
+	status_kepemilikan_id: number;
+	status_kepemilikan: string;
+	akreditasi: string;
+	nilai_akreditasi: string;
+	tahun_akreditasi: string;
+	no_sk_akreditasi: string;
+	tgl_sk_akreditasi: string;
+	tmt_mulai: string;
+	tmt_selesai: string;
+	last_sync_akreditasi: string;
+	last_update: string;
+	nama_ks: string;
+	no_hp: string;
+	alamat_jalan_ks: string;
+	jurusan: Array<{
+		jml_pd: number;
+		jurusan: string;
+		jurusan_id: string;
+		nisn_valid: number;
+	}>;
+	snpmb_date_created: string;
+	snpmb_email: string;
+	snpmb_last_sync_pusdatin: string;
+	user_id: string;
+};
+
+export enum StatusPendaftaran {
+	Permanent = 2,
+	Registered = 1,
+	NotRegistered = 0,
+}
+
+export type SnpmbVervalStudentData = {
+	nisn: string;
+	nama: string;
+	snpmb_status_pendaftaran: StatusPendaftaran;
+};
+
+export type SnpmbPdssSchoolProfileData = {
+	school_id: string;
+	npsn: string;
+	name: string;
+	type: string;
+	ownership: string;
+	accreditation: string;
+	address_street: string;
+	address_city: string;
+	address_province: string;
+	address_postal_code: string;
+	is_information_finalized: boolean;
+	information_finalized_at: number;
+	is_student_finalized: boolean;
+	student_finalized_at: number;
+	is_score_finalized: boolean;
+	score_finalized_at: number;
+	is_curriculum_finalized: boolean;
+	curriculum_finalized_at: number;
+	information_finalized_by: string;
+	student_finalized_by: string;
+	curriculum_finalized_by: string;
+	score_finalized_by: string;
+	allow_score: boolean;
+	allow_curr: boolean;
+	last_updated: number;
+	is_information_unfinalize_allowed: boolean;
+	is_student_unfinalize_allowed: boolean;
+	is_curriculum_unfinalize_allowed: boolean;
+	profile_unfinalized_at: number;
+	can_use_erapor: unknown; // Need further action (I dont know what kind of data it's because my school didnt use erapor in 2025)
+	is_erapor_enabled: boolean;
+};
+
+export type SnpmbPdssHeadmasterData = {
+	school_id: string;
+	headmaster_name: string;
+	headmaster_phone: string;
+	headmaster_address: string;
 };

@@ -1,4 +1,12 @@
-import type { SnpmbClientParams, SnpmbVervalData, SnpmbVervalParams } from '@/@types/index.js';
+import type {
+	SnpmbClientParams,
+	SnpmbSnbpUserInfoData,
+	SnpmbStudentVervalData,
+	SnpmbVervalParams,
+	SnpmbVervalSchoolVervalData,
+	SnpmbVervalStudentData,
+	SnpmbVervalUserInfoData,
+} from '@/@types/index.js';
 import { SNPMB_VERVAL_URL } from '@/const.js';
 import type { AxiosInstance } from 'axios';
 
@@ -15,7 +23,57 @@ export class SnpmbVervalManager {
 		protected params: SnpmbClientParams,
 	) {}
 
-	public async fetchInfo(): Promise<SnpmbVervalData | undefined> {
+	/**
+	 * Get general information of verval snpmb user info
+	 * @return {Promise<SnpmbSnbpUserInfoData | undefined>}
+	 */
+	public async fetchInfo(): Promise<SnpmbVervalUserInfoData | undefined> {
+		if (!(this.$vervalParams.url || this.$vervalParams.token)) {
+			throw new Error('Missing Verval Params');
+		}
+
+		const response = await this.$http.get(
+			new URL('./api/userinfo', this.$vervalParams.url).href,
+			{
+				headers: {
+					Authorization: `Bearer ${this.$vervalParams.token}`,
+				},
+			},
+		);
+
+		return response.data.data as SnpmbVervalUserInfoData | undefined;
+	}
+
+	/**
+	 * Retrieve list of student in school
+	 *
+	 * **NOTE:** Only school account is allowed to access this resource
+	 * @return {Promise<SnpmbStudentVervalData[] | undefined>}
+	 */
+	public async fetchStudentList(): Promise<SnpmbVervalStudentData[] | undefined> {
+		if (!(this.$vervalParams.url || this.$vervalParams.token)) {
+			throw new Error('Missing Verval Params');
+		}
+
+		const response = await this.$http.get(
+			new URL('./api/sekolah/verval/listsiswa', this.$vervalParams.url).href,
+			{
+				headers: {
+					Authorization: `Bearer ${this.$vervalParams.token}`,
+				},
+			},
+		);
+
+		return response.data.data as SnpmbStudentVervalData[] | undefined;
+	}
+
+	/**
+	 * Get student information of verval snpmb data
+	 *
+	 * **NOTE**: You should use student account to access this resource
+	 * @return {Promise<SnpmbStudentVervalData | undefined>}
+	 */
+	public async fetchStudentInfo(): Promise<SnpmbStudentVervalData | undefined> {
 		if (!(this.$vervalParams.url || this.$vervalParams.token)) {
 			throw new Error('Missing Verval Params');
 		}
@@ -28,9 +86,39 @@ export class SnpmbVervalManager {
 				},
 			},
 		);
-		return response.data?.data as SnpmbVervalData;
+
+		return response.data?.data as SnpmbStudentVervalData;
 	}
 
+	/**
+	 * Get school information of verval snpmb data
+	 *
+	 * **NOTE:** You should use school account to access this resource
+	 * @return {Promise<SnpmbVervalSchoolVervalData | undefined>}
+	 */
+	public async fetchSchoolInfo(): Promise<SnpmbVervalSchoolVervalData | undefined> {
+		if (!(this.$vervalParams.url || this.$vervalParams.token)) {
+			throw new Error('Missing Verval Params');
+		}
+
+		const response = await this.$http.get(
+			new URL('./api/sekolah/verval', this.$vervalParams.url).href,
+			{
+				headers: {
+					Authorization: `Bearer ${this.$vervalParams.token}`,
+				},
+			},
+		);
+
+		return response.data?.data as SnpmbVervalSchoolVervalData;
+	}
+
+	/**
+	 * Second flow of available all action registered on SNPMB Verval Manager
+	 *
+	 * This method is used to extract JWT Token from Verval SNPMB Service
+	 * @return {Promise<string | undefined>}
+	 */
 	public async getVervalToken(): Promise<string | undefined> {
 		if (!this.$vervalParams?.url) {
 			throw new Error('Missing Verval SNPMB URL');
@@ -71,6 +159,13 @@ export class SnpmbVervalManager {
 		return undefined;
 	}
 
+	/**
+	 * First flow of all method on Verval SNPMB Manager
+	 *
+	 * Why we can't define it manually? Because the Verval SNPMB service url isnt static (dynamic url).
+	 * They're using google cloud functions to deploy the service (.run.app domain)
+	 * @return {Promise<string | undefined>}
+	 */
 	public async getVervalApiUrl(): Promise<string | undefined> {
 		// Extract index chunk page
 		const vervalFirstResponse = await this.$http.get(

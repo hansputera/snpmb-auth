@@ -22,6 +22,11 @@ export const SNPMB_VERVAL_URL = 'https://verval-snpmb.bppp.kemdikbud.go.id';
 export const SNPMB_SNBP_URL = 'https://snbp.snpmb.id';
 
 /**
+ * PDSS SNBP URL
+ */
+export const SNPMB_PDSS_URL = 'https://pdss.snpmb.id';
+
+/**
  * SNPMB Cookie Path
  */
 export const DEFAULT_SNPMB_COOKIE_FILE = path.join(tmpdir(), 'snpmb-cookies.json');
