@@ -1,5 +1,5 @@
-import { tmpdir } from "node:os";
-import path from "node:path";
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 
 /**
  * SNPMB Dashboard URL
@@ -15,6 +15,11 @@ export const SNPMB_SIGN_URL = 'https://sso-snpmb.bppp.kemdikbud.go.id/signin';
  * SNPMB Verval URL
  */
 export const SNPMB_VERVAL_URL = 'https://verval-snpmb.bppp.kemdikbud.go.id';
+
+/**
+ * SNPMB SNBP URL
+ */
+export const SNPMB_SNBP_URL = 'https://snbp.snpmb.id';
 
 /**
  * SNPMB Cookie Path
