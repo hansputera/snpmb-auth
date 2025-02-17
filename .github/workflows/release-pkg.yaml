@@ -15,8 +15,11 @@ jobs:
       - uses: pnpm/action-setup@v4 # docs https://pnpm.io/continuous-integration#github-actions
         with:
             version: 10  # Optional: specify a pnpm version
-      - run: pnpm i
-      - run: pnpm build
+      - name: Install Dependencies
+        run: pnpm install
+      
+      - name: Build
+        run: pnpm build
 
   publish-gpr:
     needs: build
