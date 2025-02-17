@@ -303,3 +303,46 @@ export type SnpmbPdssHeadmasterData = {
 	headmaster_phone: string;
 	headmaster_address: string;
 };
+
+export type SnpmbPdssMajorData = {
+	major_code: string;
+	major_name: string;
+	quota: number;
+	quota_erapor: number;
+	total_student: number;
+	regular_three_year: boolean;
+	regular_four_year: boolean;
+	acceleration_four_semester: boolean;
+	acceleration_six_semester: boolean;
+};
+
+export type SnpmbPdssStudentData = {
+	student_id: string;
+	nisn: string;
+	name: string;
+	class_type_code: string;
+	rank: number;
+	is_score_complete: boolean;
+	status?: string;
+};
+
+export type SnpmbPdssScoreSemesterData = {
+	grade: number;
+	semester: number;
+	curriculum_year: number;
+	unit: string;
+	is_scale_4: boolean;
+	special_status?: unknown;
+	scores: Array<{
+		course_code: string;
+		name: string;
+		order_weight: number;
+		required: boolean;
+		is_un: boolean;
+		is_active: boolean;
+		kkm: number;
+		unit_value: number;
+		score: number;
+		score_4?: number;
+	}>;
+};

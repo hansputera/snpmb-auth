@@ -1,7 +1,10 @@
 import type {
 	SnpmbClientParams,
 	SnpmbPdssHeadmasterData,
+	SnpmbPdssMajorData,
 	SnpmbPdssSchoolProfileData,
+	SnpmbPdssScoreSemesterData,
+	SnpmbPdssStudentData,
 } from '@/@types/index.js';
 import { SNPMB_PDSS_URL } from '@/const.js';
 import type { AxiosInstance } from 'axios';
@@ -19,19 +22,76 @@ import type { AxiosInstance } from 'axios';
 export class SnpmbPdssManager {
 	protected $pdssToken = '';
 
+	/**
+	 *
+	 * @param {AxiosInstance} $http HTTP Client Axios
+	 * @param {SnpmbClientParams} params SNPMB Client Parameters
+	 */
 	constructor(
 		protected $http: AxiosInstance,
 		protected params: SnpmbClientParams,
 	) {}
 
+	/**
+	 * Get School PDSS Profile
+	 * @return {Promise<SnpmbPdssSchoolProfileData | undefined>}
+	 */
 	public async getSchoolProfile(): Promise<SnpmbPdssSchoolProfileData | undefined> {
 		return this.$fetch('/api/v2/pdss/school/profile/get');
 	}
 
+	/**
+	 * Get school headmaster profile data from PDSS service
+	 * @return {Promise<SnpmbPdssHeadmasterData | undefined>}
+	 */
 	public async getSchoolHeadmaster(): Promise<SnpmbPdssHeadmasterData | undefined> {
 		return this.$fetch('/api/v2/pdss/school/headmaster/get');
 	}
 
+	/**
+	 * Get Major List from School
+	 * @return {Promise<SnpmbPdssMajorData[] | undefined>}
+	 */
+	public async getMajorList(): Promise<SnpmbPdssMajorData[] | undefined> {
+		return this.$fetch<{
+			majors: SnpmbPdssMajorData[];
+		}>('/api/v2/pdss/school/major/list').then((resp) => resp?.majors);
+	}
+
+	/**
+	 * Get student list by major code
+	 * @param {string} majorCode Major code (from .getMajorList method)
+	 * @return {Promise<SnpmbPdssStudentData[] | undefined>}
+	 */
+	public async getStudentListByMajor(
+		majorCode: string,
+	): Promise<SnpmbPdssStudentData[] | undefined> {
+		return this.$fetch<{
+			students: SnpmbPdssStudentData[];
+		}>('/api/v2/pdss/student/major/list?major_code='.concat(majorCode)).then(
+			(resp) => resp?.students,
+		);
+	}
+
+	/**
+	 * Get scores semester student
+	 * @param {string} studentId Student ID
+	 * @return {Promise<SnpmbPdssScoreSemesterData[] | undefined>}
+	 */
+	public async getScoresSemesterByStudent(
+		studentId: string,
+	): Promise<SnpmbPdssScoreSemesterData[] | undefined> {
+		return this.$fetch<{
+			score_semesters: SnpmbPdssScoreSemesterData[];
+		}>('/api/v2/pdss/student/score/list?student_id='.concat(studentId)).then(
+			(resp) => resp?.score_semesters,
+		);
+	}
+
+	/**
+	 * Generate PDSS Service Token
+	 * @return {Promise<string>}
+	 */
 	public async getPdssToken(): Promise<string | undefined> {
 		const response = await this.$http.get(
 			new URL('./api/v2/login/pdss', this.params.snpmb?.pdssUrl ?? SNPMB_PDSS_URL).href,

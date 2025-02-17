@@ -13,27 +13,53 @@ import type { AxiosInstance } from 'axios';
 export class SnpmbSnbpManager {
 	protected $snbpToken = '';
 
+	/**
+	 *
+	 * @param {AxiosInstance} $http HTTP Client Axios
+	 * @param {SnpmbClientParams} params SNPMB Client Parameters
+	 */
 	constructor(
 		protected $http: AxiosInstance,
 		protected params: SnpmbClientParams,
 	) {}
 
+	/**
+	 * Get finalize status data from SNBP service
+	 * @return {Promise<SnpmbSnbpFinalizeData | undefined>}
+	 */
 	public async fetchFinalizeStatus(): Promise<SnpmbSnbpFinalizeData | undefined> {
 		return this.$fetch('/api/v2/snmptn/student/finalize/get/status');
 	}
 
+	/**
+	 * Get user information from SNBP service
+	 * @return {Promise<SnpmbSnbpUserInfoData | undefined>
+	 */
 	public async fetchUserInfo(): Promise<SnpmbSnbpUserInfoData | undefined> {
 		return this.$fetch('/api/v2/snmptn/student/userinfo/get');
 	}
 
+	/**
+	 * Get profile data from SNBP service
+	 * @return {Promise<SnpmbSnbpProfileData | undefined>}
+	 */
 	public async fetchProfile(): Promise<SnpmbSnbpProfileData | undefined> {
 		return this.$fetch('/api/v2/snmptn/studentprofile/get?force=false');
 	}
 
+	/**
+	 * Get university list from SNBP service
+	 * @return {Promise<SnpmbSnbpUniversityList | undefined>}
+	 */
 	public async fetchUniversityList(): Promise<SnpmbSnbpUniversityList | undefined> {
 		return this.$fetch('/api/v2/snmptn/university/list');
 	}
 
+	/**
+	 * Get program list from university
+	 * @param {string} universityId University ID
+	 * @return {Promise<SnpmbSnbpUniversityProgramList | undefined>}
+	 */
 	public async fetchUniversityPrograms(
 		universityId: number,
 	): Promise<SnpmbSnbpUniversityProgramList | undefined> {
@@ -48,10 +74,18 @@ export class SnpmbSnbpManager {
 		return response?.programs;
 	}
 
+	/**
+	 * Get student's program information
+	 * @return {Promise<SnpmbSnbpStudentProgramData | undefined>}
+	 */
 	public async fetchStudentProgram(): Promise<SnpmbSnbpStudentProgramData | undefined> {
 		return this.$fetch('/api/v2/snmptn/student/program/get');
 	}
 
+	/**
+	 * Generate SNBP service token
+	 * @return {Promise<string | undefined>}
+	 */
 	public async getSnbpToken(): Promise<string | undefined> {
 		const response = await this.$http.get(
 			new URL('./api/v2/login/snmptn', this.params.snpmb?.snpbUrl ?? SNPMB_SNBP_URL).href,

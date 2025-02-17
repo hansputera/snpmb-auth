@@ -12,7 +12,7 @@ const LOGOUT_URL_REG = /window\.location\.href='(https?:\/\/[^']+\/signout\/glob
  */
 export class SnpmbAuthManager {
 	/**
-	 * @constructor
+	 * @param {AxiosInstance} $http HTTP Client Axios
 	 * @param params SNPMB Client Params
 	 */
 	constructor(

@@ -23,7 +23,6 @@ export class SnpmbClient {
 	protected $http!: AxiosInstance;
 
 	/**
-	 * @constructor
 	 * @param params SNPMB Client Auth Params
 	 */
 	constructor(private readonly params: SnpmbClientParams) {
@@ -33,6 +32,7 @@ export class SnpmbClient {
 			httpsAgent: new HttpsCookieAgent({
 				cookies: {
 					jar: new CookieJar(
+						// @ts-ignore
 						new FileCookieStore(params.snpmb?.cookieFile ?? DEFAULT_SNPMB_COOKIE_FILE),
 					),
 				},
@@ -74,9 +74,21 @@ export class SnpmbClient {
 			},
 		);
 
+		/**
+		 * Authentication Manager for SNPMB
+		 */
 		this.authManager = new SnpmbAuthManager(this.$http, params);
+		/**
+		 * SNBP Service Manager
+		 */
 		this.snbpManager = new SnpmbSnbpManager(this.$http, params);
+		/**
+		 * PDSS Service Manager
+		 */
 		this.pdssManager = new SnpmbPdssManager(this.$http, params);
+		/**
+		 * Verval Service Manager
+		 */
 		this.vervalManager = new SnpmbVervalManager(this.$http, params);
 	}
 
