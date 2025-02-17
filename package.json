@@ -1,5 +1,5 @@
 {
-  "name": "snpmb-auth",
+  "name": "@hansputera/snpmb-auth",
   "version": "0.0.1",
   "description": "SNPMB Auth Wrapper",
   "scripts": {
@@ -66,5 +66,8 @@
   ],
   "homepage": "https://snpmb-auth.mnct.eu.org",
   "main": "./dist/SnpmbClient.cjs",
-  "module": "./dist/SnpmbClient.js"
+  "module": "./dist/SnpmbClient.js",
+  "publishConfig": {
+    "@hansputera:registry": "https://npm.pkg.github.com"
+  }
 }
