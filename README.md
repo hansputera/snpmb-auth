@@ -1,3 +1,6 @@
 # SNPMB Auth (+ PDSS & SNBP & Verval) API Wrapper
 
-Just simple reverse SNPMB API
+Just checkout the docs.
+
+## License
+MIT

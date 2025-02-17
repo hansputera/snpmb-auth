@@ -3,7 +3,7 @@
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "target": "ESNext",
-        "module": "ESNext",
+        "module": "NodeNext",
         "strictNullChecks": true,
         "noImplicitAny": true,
         "skipLibCheck": true,
@@ -13,9 +13,9 @@
         "paths": {
             "@/*": ["./src/*"]
         },
-        "moduleResolution": "nodenext",
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "nodenext"
     },
     "exclude": ["node_modules", "dist"],
     "include": ["src/**/*"]

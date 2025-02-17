@@ -1,14 +1,14 @@
 import {defineConfig} from 'tsup';
 
 export default defineConfig({
-  entry: ['./src/index.ts'],
+  entry: ['./src/SnpmbClient.ts', './src/@types/index.ts'],
   outDir: './dist',
   bundle: true,
   minifyWhitespace: true,
   minifyIdentifiers: true,
   target: ['node16', 'node18'],
   platform: 'node',
-  dts: false,
+  dts: true,
   tsconfig: './tsconfig.json',
-  format: 'esm',
+  format: ['cjs', 'esm'],
 });

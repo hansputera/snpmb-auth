@@ -2,17 +2,27 @@
   "name": "snpmb-auth",
   "version": "0.0.1",
   "description": "SNPMB Auth Wrapper",
-  "main": "./dist/index.js",
   "scripts": {
     "prepare": "node preinstall.js --max-old-space-size=10M",
     "lint": "biome lint --write ./src",
     "format": "biome format --write ./src",
     "build": "tsup",
-    "hook": "node hook.js --max-old-space-size=50M"
+    "hook": "node hook.js --max-old-space-size=50M",
+    "docs": "typedoc"
   },
   "type": "module",
   "keywords": [
-    "snpmb"
+    "snpmb",
+    "education",
+    "web scraping",
+    "scraping",
+    "pdss",
+    "kemendikbud",
+    "indonesia",
+    "snbp",
+    "snbt",
+    "snmptn",
+    "sbmptn"
   ],
   "author": {
     "name": "Hanif Dwy Putra S",
@@ -21,13 +31,16 @@
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
-    "@swc/core": "^1.10.15",
-    "@types/node": "^20.17.17",
+    "@swc/core": "^1.10.16",
+    "@types/node": "^20.17.19",
     "@types/tough-cookie-file-store": "^2.0.4",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "is-git-dirty": "^2.0.2",
     "tsup": "^8.3.6",
+    "typedoc": "^0.27.7",
+    "typedoc-material-theme": "^1.3.0",
+    "typedoc-plugin-mdn-links": "^4.0.13",
     "typescript": "^5.7.3"
   },
   "dependencies": {
@@ -35,5 +48,23 @@
     "http-cookie-agent": "^6.0.8",
     "tough-cookie": "^5.1.1",
     "tough-cookie-file-store": "^2.0.3"
-  }
+  },
+  "repository": {
+    "url": "https://github.com/hansputera/snpmb-auth"
+  },
+  "readme": "https://github.com/hansputera/snpmb-auth/blob/main/README.md",
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "maintainers": [
+    {
+      "name": "Hanif Dwy Putra S",
+      "email": "hanifdwyputrasembiring@gmail.com",
+      "url": "https://hanifu.id"
+    }
+  ],
+  "homepage": "https://snpmb-auth.mnct.eu.org",
+  "main": "./dist/SnpmbClient.cjs",
+  "module": "./dist/SnpmbClient.js"
 }

@@ -1,0 +1,28 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": ["./src/**/*.ts"],
+    "out": "docs",
+    "sort": [
+        "kind",
+        "instance-first",
+        "alphabetical-ignoring-documents"
+    ],
+    "useFirstParagraphOfCommentAsSummary": true,
+    "treatValidationWarningsAsErrors": true,
+    "groupOrder": [
+        "Functions",
+        "Variables"
+    ],
+    "cleanOutputDir": true,
+    "searchInDocuments": true,
+    "useHostedBaseUrlForAbsoluteLinks": true,
+    "pretty": true,
+    "hostedBaseUrl": "https://snpmb-auth.mnct.eu.org",
+    "cname": "snpmb-auth.mnct.eu.org",
+    "cacheBust": true,
+    "plugin": [
+        "typedoc-material-theme",
+        "typedoc-plugin-mdn-links"
+    ],
+    "themeColor": "#cb9820"
+}
