@@ -33,6 +33,9 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/=
+      - uses: pnpm/action-setup@v4 # docs https://pnpm.io/continuous-integration#github-actions
+        with:
+            version: 10  # Optional: specify a pnpm version
       - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
