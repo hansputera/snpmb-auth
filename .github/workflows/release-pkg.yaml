@@ -38,6 +38,6 @@ jobs:
             version: 10  # Optional: specify a pnpm version
       - name: Install Dependencies
         run: pnpm install
-      - run: pnpm publish --access public --no-git-checks
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
