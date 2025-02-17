@@ -69,5 +69,8 @@
   "module": "./dist/SnpmbClient.js",
   "publishConfig": {
     "@hansputera:registry": "https://npm.pkg.github.com"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
